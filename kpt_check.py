@@ -1,12 +1,18 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from __future__ import print_function
-
+#!/usr/bin/env python3
+#
+# kpt_check.py
+#     2021/06/25 modified for new style of pymatgen, T. Yamashita
+#     20??/??/?? T. Yamashita
+#
 import argparse
 import pickle
 
-from pymatgen import Structure
+try:
+    # for new style
+    from pymatgen.core import Structure
+except:
+    # for old style
+    from pymatgen import Structure
 from pymatgen.io.vasp.sets import MITRelaxSet
 
 
