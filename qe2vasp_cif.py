@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 import sys
 
-from pymatgen import Structure
+from pymatgen.core import Structure
 from pymatgen.core.units import Length
 from pymatgen.io.cif import CifWriter
 
@@ -20,7 +19,7 @@ def get_natot(filename):
 
 
 def extract_cell_parameters(filename):
-    #---------- last CELL_PARAMETERS
+    # ---------- last CELL_PARAMETERS
     with open(filename, 'r') as f:
         lines = f.readlines()
     lines_cell = None
@@ -35,7 +34,7 @@ def extract_cell_parameters(filename):
 
 
 def extract_atomic_positions(filename, natot):
-    #---------- last ATOMIC_POSITIONS
+    # ---------- last ATOMIC_POSITIONS
     with open(filename, 'r') as f:
         lines = f.readlines()
     lines_atom = None
@@ -50,7 +49,7 @@ def extract_atomic_positions(filename, natot):
 
 
 def from_lines(lines_cell, lines_atom):
-    #---------- lattice
+    # ---------- lattice
     unit = lines_cell[0].split()[1]
     if unit[0] == '(' and unit[-1] == ')':
         unit = unit[1:-1]
@@ -65,7 +64,7 @@ def from_lines(lines_cell, lines_atom):
         ValueError('unit "{0:s}" for CELL_PARAMETERS is not supported'.format(unit))
     lattice = [[scale * float(x) for x in line.split()] for line in lines_cell[1:4]]
 
-    #---------- species & coordinates
+    # ---------- species & coordinates
     unit = lines_atom[0].split()[1]
     if unit[0] == '(' and unit[-1] == ')':
         unit = unit[1:-1]
@@ -88,8 +87,8 @@ def from_lines(lines_cell, lines_atom):
 def out_struc(fin, fout, tolerance=0.1):
     natot = get_natot(fin)
     lines_cell = extract_cell_parameters(fout)
-    if lines_cell is None:    # 'relax' --> no CELL_PARAMETERS
-        lines_cell = extract_cell_parameters(fin)    # get from input
+    if lines_cell is None:    # in 'relax' mode, no CELL_PARAMETERS
+        lines_cell = extract_cell_parameters(fin)    # get CELL_PARAMETERS from input
     lines_atom = extract_atomic_positions(fout, natot)
     structure = from_lines(lines_cell, lines_atom)    # pymatgen format
     structure.to(fmt='poscar', filename='out_struc.vasp')
@@ -109,9 +108,9 @@ def in_struc(fin, tolerance=0.001):
 
 if __name__ == '__main__':
 
-    if len(sys.argv) == 2:    # one argument --> structure from input file
+    if len(sys.argv) == 2:    # qe2vasp_cif pwscf.in --> in_struc.xxx
         in_struc(sys.argv[1])
-    elif len(sys.argv) == 3:    # two arguments --> structure from output file
+    elif len(sys.argv) == 3:    # qe2vasp_cif pwscf.in pwscf.out --> out_struc.xxx
         out_struc(sys.argv[1], sys.argv[2])
     else:
         raise SystemExit('Usage: [python] qe2vasp_cif.py pwscf.in [pwscf.out] ')
