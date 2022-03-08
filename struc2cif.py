@@ -3,17 +3,12 @@
 
 import argparse
 
-from pymatgen import Structure
+from pymatgen.core import Structure
 from pymatgen.io.cif import CifWriter
 
 
 def get_cif(filename, tolerance=0.1):
-    if filename[-5:] == '.vasp':
-        with open(filename, 'r') as f:
-            struc_str = f.read()
-        struc = Structure.from_str(struc_str, fmt='poscar')
-    else:
-        struc = Structure.from_file(filename)
+    struc = Structure.from_file(filename)
     cif = CifWriter(struc, symprec=tolerance)
     cif.write_file(filename+'.cif')
 

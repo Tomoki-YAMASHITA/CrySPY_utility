@@ -2,16 +2,11 @@
 
 import argparse
 
-from pymatgen import Structure
+from pymatgen.core import Structure
 
 
 def get_spg_info(filename, tolerance=0.1):
-    if filename[-5:] == '.vasp':
-        with open(filename, 'r') as f:
-            struc_str = f.read()
-        struc = Structure.from_str(struc_str, fmt='poscar')
-    else:
-        struc = Structure.from_file(filename)
+    struc = Structure.from_file(filename)
     spg_sym, spg_num = struc.get_space_group_info(symprec=tolerance)
     return spg_sym, spg_num
 
