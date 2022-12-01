@@ -1,0 +1,8 @@
+#!/bin/bash
+LOG_LASTLINE=''
+while [ "$LOG_LASTLINE" != "Done all structures!" ]
+do
+    cryspy
+    LOG_LASTLINE=`tail -n 1 log`
+    sleep 4m
+done
