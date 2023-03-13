@@ -58,7 +58,7 @@ if __name__ == '__main__':
     if args.index:   # not vacant
         for cid in args.index:
             if args.symmetrized:
-                struc_data[cid].to(fmt='cif', filename='{}.cif'.format(cid), symprec=0.1)
+                struc_data[cid].to(fmt='cif', filename='{}.cif'.format(cid), symprec=0.01)
             else:
                 struc_data[cid].to(fmt='cif', filename='{}.cif'.format(cid))
         raise SystemExit()
@@ -77,7 +77,7 @@ if __name__ == '__main__':
             else:
                 cifname='{}.cif'.format(cid)
             if args.symmetrized:
-                struc_data[cid].to(fmt='cif', filename=cifname, symprec=0.1)
+                struc_data[cid].to(fmt='cif', filename=cifname, symprec=0.01)
             else:
                 struc_data[cid].to(fmt='cif', filename=cifname.format(cid))
         raise SystemExit()
@@ -86,7 +86,7 @@ if __name__ == '__main__':
     if args.all_id:
         for cid, struc in struc_data.items():
             if args.symmetrized:
-                struc.to(fmt='cif', filename='{}.cif'.format(cid), symprec=0.1)
+                struc.to(fmt='cif', filename='{}.cif'.format(cid), symprec=0.01)
             else:
                 struc.to(fmt='cif', filename='{}.cif'.format(cid))
 

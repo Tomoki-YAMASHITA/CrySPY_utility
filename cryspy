@@ -1,3 +1,0 @@
-#!/bin/sh
-
-python3 -u /xxx/yyy/zzz/CrySPY-v.v.v/cryspy.py 1>> log 2>> err

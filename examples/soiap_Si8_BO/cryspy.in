@@ -1,0 +1,29 @@
+[basic]
+algo = BO
+calc_code = soiap
+tot_struc = 20
+nstage = 1
+njob = 2
+jobcmd = zsh
+jobfile = job_cryspy
+
+[structure]
+natot = 8
+atype = Si
+nat = 8
+
+[soiap]
+soiap_infile = soiap.in
+soiap_outfile = soiap.out
+soiap_cif = initial.cif
+
+[BO]
+nselect_bo = 2
+dscrpt = FP
+score = TS
+fp_rmin = 0.5
+fp_rmax = 5.0
+fp_npoints = 20
+fp_sigma = 1.0
+
+[option]

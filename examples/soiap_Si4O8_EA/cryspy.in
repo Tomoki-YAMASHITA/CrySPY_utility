@@ -1,0 +1,34 @@
+[basic]
+algo = EA
+calc_code = soiap
+tot_struc = 20
+nstage = 1
+njob = 4
+jobcmd = zsh
+jobfile = job_cryspy
+
+[structure]
+natot = 12
+atype = Si O
+nat = 4  8
+mindist_1 = 1.8  1.2
+mindist_2 = 1.2  1.8
+
+[soiap]
+soiap_infile = soiap.in
+soiap_outfile = soiap.out
+soiap_cif = initial.cif
+
+[EA]
+n_pop = 20
+n_crsov = 10
+n_perm = 3
+n_strain = 4
+n_rand = 3
+n_elite = 2
+n_fittest = 10
+slct_func = TNM
+t_size = 2
+maxgen_ea = 0
+
+[option]

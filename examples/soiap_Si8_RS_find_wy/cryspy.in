@@ -1,0 +1,25 @@
+[basic]
+algo = RS
+calc_code = soiap
+tot_struc = 15
+nstage = 1
+njob = 2
+jobcmd = zsh
+jobfile = job_cryspy
+
+[structure]
+natot = 8
+atype = Si
+nat = 8
+minlen = 3
+maxlen = 8
+dangle = 20
+use_find_wy = True
+
+
+[soiap]
+soiap_infile = soiap.in
+soiap_outfile = soiap.out
+soiap_cif = initial.cif
+
+[option]
