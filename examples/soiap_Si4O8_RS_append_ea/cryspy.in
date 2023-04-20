@@ -11,8 +11,8 @@ jobfile = job_cryspy
 natot = 12
 atype = Si O
 nat = 4  8
-mindist_1 = 1.8  1.2
-mindist_2 = 1.2  1.8
+mindist_1 = 1.5  1.2
+mindist_2 = 1.2  1.5
 
 [soiap]
 soiap_infile = soiap.in
