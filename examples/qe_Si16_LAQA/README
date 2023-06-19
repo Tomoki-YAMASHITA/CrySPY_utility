@@ -1,0 +1,2 @@
+- You do not have to use "repeat_cryspy".
+- Edit pseudo_dir in "./calc_in/pwscf.in", and prepare the potential.

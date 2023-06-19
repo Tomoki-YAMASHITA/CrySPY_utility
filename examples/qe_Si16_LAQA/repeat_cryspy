@@ -1,15 +1,9 @@
-#!/bin/bash
-
-set -e
-
+#!/bin/bash -e
 while :
 do
     cryspy
     LOG_LASTLINE=`tail -n 1 log_cryspy`
     if  [ "$LOG_LASTLINE" = "Done all structures!" ]
-    then
-        exit 0
-    elif [ "${LOG_LASTLINE:0:21}" = "Reached max_select_bo" ]
     then
         exit 0
     elif [ "$LOG_LASTLINE" = "LAQA is ready" ]

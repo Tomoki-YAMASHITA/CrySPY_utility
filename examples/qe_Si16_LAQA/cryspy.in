@@ -1,0 +1,24 @@
+[basic]
+algo = LAQA
+calc_code = QE
+tot_struc = 50
+nstage = 1
+njob = 10
+jobcmd = qsub
+jobfile = job_cryspy
+
+[structure]
+natot = 16
+atype = Si
+nat = 16
+mindist_1 = 1.5
+
+[QE]
+qe_infile = pwscf.in
+qe_outfile = pwscf.out
+kppvol =  80
+
+[LAQA]
+nselect_laqa = 4
+
+[option]
