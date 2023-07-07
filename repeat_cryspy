@@ -9,12 +9,17 @@ do
     if  [ "$LOG_LASTLINE" = "Done all structures!" ]
     then
         exit 0
+    # ---------- for BO
     elif [ "${LOG_LASTLINE:0:21}" = "Reached max_select_bo" ]
     then
         exit 0
+    elif [ "$LOG_LASTLINE" = "BO is ready" ]
+    then
+        cryspy    # selection
+        cryspy    # submit jobs
+    # ---------- for LAQA
     elif [ "$LOG_LASTLINE" = "LAQA is ready" ]
     then
-        # ---------- for LAQA
         cryspy    # selection
         cryspy    # submit jobs
     fi
