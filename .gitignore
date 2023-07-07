@@ -6,6 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+# build
+*.o
+*.mod
+
 # Distribution / packaging
 .Python
 env/
@@ -90,3 +94,6 @@ ENV/
 
 # Mac
 .DS_Store
+
+# f-fingerprint
+f-fingerprint/cal_fingerprint
