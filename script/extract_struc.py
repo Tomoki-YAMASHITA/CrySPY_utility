@@ -2,6 +2,12 @@
 #
 # extract_struc.py
 #
+#   2023/07/21 T. Yamashita
+#   --print option
+#
+#   2023/07/19 T. Yamashita
+#   For pandas, pkl_load() --> pd.read_pickle()
+#
 #   2022/12/01 T. Yamashita
 #   --top option
 #
@@ -16,6 +22,7 @@ import argparse
 import os
 import pickle
 
+import pandas as pd
 
 if __name__ == '__main__':
     '''
@@ -23,6 +30,9 @@ if __name__ == '__main__':
     and output cif file(s)
 
     example:
+    - print ID 7 10 12
+    python3 extract_struc.py init_struc_data.pkl -i 7 10 12 -p
+
     - write cifs of ID 7 10 12 (output 7.cif, 10.cif, 12.cif)
       python3 extract_struc.py init_struc_data.pkl -i 7 10 12
     - write cifs of ID 7 10 12 (output 7.cif, 10.cif, 12.cif) with symmetry information
@@ -42,6 +52,7 @@ if __name__ == '__main__':
     '''
     # ---------- argparse
     parser = argparse.ArgumentParser()
+    parser.add_argument('-p', '--print', help='flag for print', action='store_true')
     parser.add_argument('-a', '--all_id', help='flag for all structures', action='store_true')
     parser.add_argument('-i', '--index', help='structure ID', type=int, nargs='*')
     parser.add_argument('-t', '--top', help='top k structures', type=int, nargs=1)
@@ -57,36 +68,45 @@ if __name__ == '__main__':
     # ---------- index
     if args.index:   # not vacant
         for cid in args.index:
-            if args.symmetrized:
-                struc_data[cid].to(fmt='cif', filename='{}.cif'.format(cid), symprec=0.01)
+            if args.print:
+                print(f'\nID {cid}')
+                print(struc_data[cid])
+            elif args.symmetrized:
+                struc_data[cid].to(fmt='cif', filename=f'{cid}.cif', symprec=0.01)
             else:
-                struc_data[cid].to(fmt='cif', filename='{}.cif'.format(cid))
+                struc_data[cid].to(fmt='cif', filename=f'{cid}.cif')
         raise SystemExit()
 
     # ---------- top k
     if args.top:   # not vacant
         # ------ load rslt_data.pkl. It must be in the same directory as the input
-        rslt_path = os.path.dirname(args.infile) + '/rslt_data.pkl'
-        with open(rslt_path, 'rb') as f:
-            rslt_data = pickle.load(f)
+        rslt_path = os.path.dirname(os.path.abspath(args.infile)) + '/rslt_data.pkl'
+        rslt_data = pd.read_pickle(rslt_path)
         # ------ top k data
         top_k = rslt_data.sort_values(by=['E_eV_atom'], ascending=True).head(args.top[0])
         for k, cid in enumerate(top_k.index):
-            if args.rank:
-                cifname = '{}_{}.cif'.format(k+1, cid)
+            if args.print:
+                print(f'\nID {cid}')
+                print(struc_data[cid])
             else:
-                cifname='{}.cif'.format(cid)
-            if args.symmetrized:
-                struc_data[cid].to(fmt='cif', filename=cifname, symprec=0.01)
-            else:
-                struc_data[cid].to(fmt='cif', filename=cifname.format(cid))
+                if args.rank:
+                    cifname = f'{k+1}_{cid}.cif'
+                else:
+                    cifname=f'{cid}.cif'
+                if args.symmetrized:
+                    struc_data[cid].to(fmt='cif', filename=cifname, symprec=0.01)
+                else:
+                    struc_data[cid].to(fmt='cif', filename=cifname)
         raise SystemExit()
 
     # ---------- all
     if args.all_id:
         for cid, struc in struc_data.items():
-            if args.symmetrized:
-                struc.to(fmt='cif', filename='{}.cif'.format(cid), symprec=0.01)
+            if args.print:
+                print(f'\nID {cid}')
+                print(struc_data[cid])
+            elif args.symmetrized:
+                struc.to(fmt='cif', filename=f'{cid}.cif', symprec=0.01)
             else:
-                struc.to(fmt='cif', filename='{}.cif'.format(cid))
+                struc.to(fmt='cif', filename=f'{cid}.cif')
 
