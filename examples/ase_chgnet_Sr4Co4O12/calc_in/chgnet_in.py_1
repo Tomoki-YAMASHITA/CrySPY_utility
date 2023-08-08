@@ -1,0 +1,25 @@
+from chgnet.model import StructOptimizer
+from pymatgen.core import Structure
+
+
+# ---------- input structure
+# CrySPY outputs 'POSCAR' as an input file in work/xxxxxx directory
+structure = Structure.from_file('POSCAR')
+
+# ---------- relax
+relaxer = StructOptimizer()
+result = relaxer.relax(atoms=structure)
+
+# ---------- opt. structure and energy
+# [rule in ASE interface]
+# output file for energy: 'log.tote' in eV/cell
+#                         CrySPY reads the last line of 'log.tote'
+# output file for structure: 'CONTCAR' in vasp format
+# ------ energy
+traj = result['trajectory']
+e = traj.compute_energy()   # eV/cell
+with open('log.tote', mode='w') as f:
+    f.write(str(e))
+# ------ struc
+opt_struc = result["final_structure"]
+opt_struc.to(fmt='poscar', filename='CONTCAR')

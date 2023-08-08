@@ -1,0 +1,21 @@
+[basic]
+algo = RS
+calc_code = ASE
+tot_struc = 10
+nstage = 1
+njob = 2
+jobcmd = bash
+jobfile = job_cryspy
+
+[structure]
+natot = 20
+atype = Sr Co O
+nat = 4  4  12
+mindist_1 = 2.2  2.0  1.8
+mindist_2 = 2.0  2.2  1.5
+mindist_3 = 1.8  1.5  2.0
+
+[ASE]
+ase_python = chgnet_in.py
+
+[option]
