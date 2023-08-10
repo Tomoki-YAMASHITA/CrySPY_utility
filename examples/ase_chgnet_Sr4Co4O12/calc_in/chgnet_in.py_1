@@ -8,7 +8,7 @@ structure = Structure.from_file('POSCAR')
 
 # ---------- relax
 relaxer = StructOptimizer()
-result = relaxer.relax(atoms=structure)
+result = relaxer.relax(atoms=structure, fmax=0.01, steps=2000)
 
 # ---------- opt. structure and energy
 # [rule in ASE interface]
