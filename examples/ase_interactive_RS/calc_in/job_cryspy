@@ -1,7 +1,5 @@
 #!/bin/sh
-
-# ---------- ASE
-python3 chgnet_in.py
+python3 ase_in.py
 
 # ---------- CrySPY
 sed -i -e '3 s/^.*$/done/' stat_job

@@ -1,0 +1,32 @@
+ &control
+    title = 'SrO'
+    calculation = 'relax'
+    nstep = 100
+    restart_mode = 'from_scratch',
+    pseudo_dir = '/usr/local/gbrv/all_pbe_UPF_v1.5/'
+    outdir='./out.d/'
+ /
+
+ &system
+    ibrav = 0
+    nat = 8
+    ntyp = 2
+    ecutwfc = 40
+    ecutrho = 200
+    occupations = 'smearing'
+    degauss = 0.01
+ /
+
+ &electrons
+ /
+
+ &ions
+ /
+
+ &cell
+    press = 400
+ /
+
+ATOMIC_SPECIES
+  Sr  -1.0  sr_pbe_v1.uspp.F.UPF
+   O  -1.0  o_pbe_v1.2.uspp.F.UPF

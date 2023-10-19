@@ -1,0 +1,34 @@
+from ase.constraints import ExpCellFilter, StrainFilter
+from ase.calculators.emt import EMT
+from ase.calculators.lj import LennardJones
+from ase.optimize.sciopt import SciPyFminCG
+from ase.optimize import BFGS
+from ase.spacegroup.symmetrize import FixSymmetry
+import numpy as np
+from ase.io import read, write
+
+
+def main():
+
+    # with open('POSCAR', mode='r') as P_file:
+    atoms = read('POSCAR', format='vasp')
+
+    atoms.calc = EMT()
+
+    atoms.set_constraint([FixSymmetry(atoms)])
+
+    atoms = ExpCellFilter(atoms, hydrostatic_strain=False)
+    opt = BFGS(atoms)
+    # opt=SciPyFminCG(atoms)
+    opt.run()
+
+    e = atoms.atoms.get_total_energy()
+
+    with open('log.tote', mode='w') as E_file:
+        E_file.write(str(e))
+
+    write("CONTCAR", atoms.atoms, format="vasp")
+
+
+if __name__ == "__main__":
+    main()

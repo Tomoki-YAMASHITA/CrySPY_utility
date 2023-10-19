@@ -1,0 +1,21 @@
+[basic]
+algo = RS
+calc_code = QE
+tot_struc = 10
+nstage = 2
+njob = 4
+jobcmd = qsub
+jobfile = job_cryspy
+
+[structure]
+natot = 8
+atype = Sr O
+nat = 4 4
+
+[QE]
+qe_infile = pwscf.in
+qe_outfile = pwscf.out
+kppvol =  40  80
+pv_term = True
+
+[option]

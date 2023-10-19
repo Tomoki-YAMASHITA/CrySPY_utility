@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# ---------- ASE
+python3 chgnet_in.py
+
+# ---------- for error
+if [ ! -f "log.tote" ]; then
+    sed -i -e '3 s/^.*$/skip/' stat_job
+    exit 1
+fi
+
+# ---------- CrySPY
+sed -i -e '3 s/^.*$/done/' stat_job

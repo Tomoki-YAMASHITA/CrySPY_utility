@@ -1,5 +1,5 @@
 SYSTEM = NaCl
-LREAL = Auto
+!!!!LREAL = Auto
 Algo = Fast
 NSW = 200
 
@@ -15,7 +15,6 @@ ISMEAR = 0
 SIGMA = 0.1
 
 IBRION = 2
-!!POTIM = 0.3
 ISIF = 3
 
 EDIFF = 1e-5
