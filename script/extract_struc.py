@@ -2,6 +2,10 @@
 #
 # extract_struc.py
 #
+#   2024/04/16 T. Yamashita
+#   --tolerance option
+#   gzip file
+#
 #   2023/07/21 T. Yamashita
 #   --print option
 #
@@ -19,6 +23,7 @@
 #   pymatgen is required
 #
 import argparse
+import gzip
 import os
 import pickle
 
@@ -31,39 +36,55 @@ if __name__ == '__main__':
 
     example:
     - print ID 7 10 12
-    python3 extract_struc.py init_struc_data.pkl -i 7 10 12 -p
+      extract_struc.py opt_struc_data.pkl -i 7 10 12 -p
 
     - write cifs of ID 7 10 12 (output 7.cif, 10.cif, 12.cif)
-      python3 extract_struc.py init_struc_data.pkl -i 7 10 12
+      extract_struc.py opt_struc_data.pkl -i 7 10 12
     - write cifs of ID 7 10 12 (output 7.cif, 10.cif, 12.cif) with symmetry information
-      python3 extract_struc.py init_struc_data.pkl -i 7 10 12 -s
+      extract_struc.py opt_struc_data.pkl -i 7 10 12 -s
 
-    - write cif of top k structures
-      python3 extract_struc.py ./data/pkl_data/opt_struc_data.pkl -t 3
-    - write cif of top k structures with the rank in the filename
-      python3 extract_struc.py ./data/pkl_data/opt_struc_data.pkl -t 3 -r
-    - write cif of top k structures with the rank in the filename and symmetory information
-      python3 extract_struc.py ./data/pkl_data/opt_struc_data.pkl -t 3 -rs
+    top k needs rslt_data.pkl
+    - write cif of top k structures (k = 3)
+      extract_struc.py opt_struc_data.pkl -t 3
+    - write cif of top k structures (k = 3) with the rank in the filename
+      extract_struc.py opt_struc_data.pkl -t 3 -r
+    - write cif of top k structures (k = 3) with the rank in the filename and symmetry information
+      extract_struc.py opt_struc_data.pkl -t 3 -rs
 
     - write all (output 0.cif, 1.cif, 2.cif ....)
-      python3 extract_struc.py init_struc_data.pkl -a
+      extract_struc.py opt_struc_data.pkl -a
     - write all (output 0.cif, 1.cif, 2.cif ....) with symmetry information
-      python3 extract_struc.py init_struc_data.pkl -as
+      extract_struc.py opt_struc_data.pkl -as
     '''
     # ---------- argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--print', help='flag for print', action='store_true')
-    parser.add_argument('-a', '--all_id', help='flag for all structures', action='store_true')
-    parser.add_argument('-i', '--index', help='structure ID', type=int, nargs='*')
-    parser.add_argument('-t', '--top', help='top k structures', type=int, nargs=1)
-    parser.add_argument('-r', '--rank', help='flag for rank in file names', action='store_true')
-    parser.add_argument('-s', '--symmetrized', help='flag for symmetrized structure', action='store_true')
+    parser.add_argument('-p', '--print', help='just print, e.g., extract_struc.py opt_struc_data.pkl -i 7 10 12 -ps',
+                        action='store_true')
+    parser.add_argument('-a', '--all_id', help='all structures, e.g., extract_struc.py opt_struc_data.pkl -as',
+                        action='store_true')
+    parser.add_argument('-i', '--index', help='structure ID, e.g., extract_struc.py opt_struc_data.pkl -i 7 10 12 -s',
+                        type=int, nargs='*')
+    parser.add_argument('-t', '--top',
+                        help='top k structures, e.g. (k = 3), extract_struc.py opt_struc_data.pkl -t 3 -s',
+                        type=int, nargs=1)
+    parser.add_argument('-r', '--rank',
+                        help='add rank in file names, e.g., extract_struc.py opt_struc_data.pkl -t 3 -rs', action='store_true')
+    parser.add_argument('-s', '--symmetrized',
+                        help='symmetrized structure, e.g., extract_struc.py opt_struc_data.pkl -i 7 10 12 -s',
+                        action='store_true')
+    parser.add_argument('--tolerance',
+                        help='tolerance for symmetrization (default 0.01), e.g., extract_struc.py ./init_struc_data.pkl -i 0 1 -s --tolerance 0.01',
+                        type=float, default=0.01)
     parser.add_argument('infile', help='input file')
     args = parser.parse_args()
 
     # ---------- load struc_data
-    with open(args.infile, 'rb') as f:
-        struc_data = pickle.load(f)
+    if args.infile.endswith('.gz'):
+        with gzip.open(args.infile, 'rb') as f:
+            struc_data = pickle.load(f)
+    else:
+        with open(args.infile, 'rb') as f:
+            struc_data = pickle.load(f)
 
     # ---------- index
     if args.index:   # not vacant
@@ -72,7 +93,7 @@ if __name__ == '__main__':
                 print(f'\nID {cid}')
                 print(struc_data[cid])
             elif args.symmetrized:
-                struc_data[cid].to(fmt='cif', filename=f'{cid}.cif', symprec=0.01)
+                struc_data[cid].to(fmt='cif', filename=f'{cid}.cif', symprec=args.tolerance)
             else:
                 struc_data[cid].to(fmt='cif', filename=f'{cid}.cif')
         raise SystemExit()
@@ -94,7 +115,7 @@ if __name__ == '__main__':
                 else:
                     cifname=f'{cid}.cif'
                 if args.symmetrized:
-                    struc_data[cid].to(fmt='cif', filename=cifname, symprec=0.01)
+                    struc_data[cid].to(fmt='cif', filename=cifname, symprec=args.tolerance)
                 else:
                     struc_data[cid].to(fmt='cif', filename=cifname)
         raise SystemExit()
@@ -106,7 +127,7 @@ if __name__ == '__main__':
                 print(f'\nID {cid}')
                 print(struc_data[cid])
             elif args.symmetrized:
-                struc.to(fmt='cif', filename=f'{cid}.cif', symprec=0.01)
+                struc.to(fmt='cif', filename=f'{cid}.cif', symprec=args.tolerance)
             else:
                 struc.to(fmt='cif', filename=f'{cid}.cif')
 

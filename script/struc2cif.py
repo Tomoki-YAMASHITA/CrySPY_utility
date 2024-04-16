@@ -1,22 +1,21 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
+#
+# 2023 Nov. 30 modified by T. Yamashita
+#
 import argparse
 
 from pymatgen.core import Structure
-from pymatgen.io.cif import CifWriter
 
 
-def get_cif(filename, tolerance=0.1):
+def get_cif(filename, tolerance=0.01):
     struc = Structure.from_file(filename)
-    cif = CifWriter(struc, symprec=tolerance)
-    cif.write_file(filename+'.cif')
+    struc.to(fmt='cif', filename=filename+'.cif', symprec=tolerance)
 
 
 if __name__ == '__main__':
     # ---------- argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('-t', '--tolerance', help='tolerance', type=float, default=0.1)
+    parser.add_argument('-t', '--tolerance', help='tolerance', type=float, default=0.01)
     parser.add_argument('infile', help='input file')
     args = parser.parse_args()
 
