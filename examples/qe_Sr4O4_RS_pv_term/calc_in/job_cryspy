@@ -7,12 +7,14 @@
 ####$ -q ibis1.q
 ####$ -q ibis2.q
 
-mpirun -np $NSLOTS pw.x  < pwscf.in > pwscf.out
+# ---------- qe run
+mpirun -np $NSLOTS /path/to/pw.x  < pwscf.in > pwscf.out
 
-
+# ---------- qe if crash
 if [ -e "CRASH" ]; then
     sed -i -e '3 s/^.*$/skip/' stat_job
     exit 1
 fi
 
+# ---------- cryspy
 sed -i -e '3 s/^.*$/done/' stat_job

@@ -3,7 +3,7 @@ algo = RS
 calc_code = QE
 tot_struc = 10
 nstage = 2
-njob = 1
+njob = 2
 jobcmd = qsub
 jobfile = job_cryspy
 

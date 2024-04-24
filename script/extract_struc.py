@@ -73,7 +73,7 @@ if __name__ == '__main__':
                         help='symmetrized structure, e.g., extract_struc.py opt_struc_data.pkl -i 7 10 12 -s',
                         action='store_true')
     parser.add_argument('--tolerance',
-                        help='tolerance for symmetrization (default 0.01), e.g., extract_struc.py ./init_struc_data.pkl -i 0 1 -s --tolerance 0.01',
+                        help='tolerance for symmetrization (default 0.01), e.g., extract_struc.py opt_struc_data.pkl -i 0 1 -s --tolerance 0.01',
                         type=float, default=0.01)
     parser.add_argument('infile', help='input file')
     args = parser.parse_args()

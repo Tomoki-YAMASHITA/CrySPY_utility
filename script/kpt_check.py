@@ -1,23 +1,19 @@
 #!/usr/bin/env python3
 #
 # kpt_check.py
+#     2024/04/21 quit MITRelaxSet, just use Kpoints class, T. Yamashita
 #     2021/06/25 modified for new style of pymatgen, T. Yamashita
 #     20??/??/?? T. Yamashita
 #
 import argparse
 import pickle
 
-try:
-    # for new style
-    from pymatgen.core import Structure
-except:
-    # for old style
-    from pymatgen import Structure
-from pymatgen.io.vasp.sets import MITRelaxSet
+from pymatgen.core import Structure
+from pymatgen.io.vasp import Kpoints
 
 
-def get_struc(filename):
-    struc = Structure.from_file(filename)
+def get_struc(filepath):
+    struc = Structure.from_file(filepath)
     return struc
 
 
@@ -28,14 +24,12 @@ def load_init_struc(filepath):
 
 
 def write_kpt(struc, kppvol):
-    mitparamset = MITRelaxSet(struc)
-    kpoints = mitparamset.kpoints.automatic_density_by_vol(struc, kppvol)
+    kpoints = Kpoints.automatic_density_by_vol(structure=struc, kppvol=kppvol)
     kpoints.write_file('KPOINTS')
 
 
 def kpt_check(struc, kppvol):
-    mitparamset = MITRelaxSet(struc)
-    kpoints = mitparamset.kpoints.automatic_density_by_vol(struc, kppvol)
+    kpoints = Kpoints.automatic_density_by_vol(structure=struc, kppvol=kppvol)
     print('a =', struc.lattice.a)
     print('b =', struc.lattice.b)
     print('c =', struc.lattice.c)
@@ -59,14 +53,13 @@ def kpt_check_init_struc(init_struc_data, kppvol, nstruc):
 if __name__ == '__main__':
     '''
     sys.argv[1] <-- POSCAR, CONTCAR, or init_struc_data.pkl
-                    ./aaa/bbb/POSCAR is OK
     sys.argv[2] <-- kppvol
     '''
     # ---------- argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('-w', '--write', help='write KPOINTS', action='store_true')
     parser.add_argument('-n', '--nstruc', help='number of structure to check', type=int, default=5)
-    parser.add_argument('infile', help='input file: POSCAR or CONTCAR or init_struc_data.pkl')
+    parser.add_argument('infile', help='input file: POSCAR, CONTCAR, or init_struc_data.pkl')
     parser.add_argument('kppvol', help='kppvol', type=int)
     args = parser.parse_args()
 

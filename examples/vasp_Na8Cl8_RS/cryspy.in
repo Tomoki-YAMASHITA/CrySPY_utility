@@ -1,7 +1,7 @@
 [basic]
 algo = RS
 calc_code = VASP
-tot_struc = 10
+tot_struc = 5
 nstage = 2
 njob = 2
 jobcmd = qsub
@@ -11,8 +11,8 @@ jobfile = job_cryspy
 natot = 16
 atype = Na Cl
 nat = 8 8
-mindist_1 = 3.0  2.0
-mindist_2 = 2.0  3.0
+mindist_1 = 2.5 1.5
+mindist_2 = 1.5 2.5
 
 [VASP]
 kppvol = 40 80

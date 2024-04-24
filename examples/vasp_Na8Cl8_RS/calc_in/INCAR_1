@@ -1,10 +1,10 @@
 SYSTEM = NaCl
-!!!!LREAL = Auto
+!!!LREAL = Auto
 Algo = Fast
-NSW = 60
+NSW = 40
 
 LWAVE = .FALSE.
-!!!!LCHARG = .FALSE.
+!LCHARG = .FALSE.
 
 ISPIN =  1
 
