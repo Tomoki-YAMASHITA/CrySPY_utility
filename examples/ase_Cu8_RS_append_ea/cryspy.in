@@ -1,0 +1,32 @@
+[basic]
+algo = RS
+calc_code = ASE
+tot_struc = 10
+nstage = 1
+njob = 5
+jobcmd = zsh
+jobfile = job_cryspy
+
+[structure]
+natot = 8
+atype = Cu
+nat = 8
+
+[ASE]
+ase_python = ase_in.py
+
+[option]
+append_struc_ea = False
+
+[EA]
+n_pop = 10
+n_crsov = 5
+n_perm = 0
+n_strain = 3
+n_rand = 2
+n_elite = 2
+n_fittest = 5
+slct_func = TNM
+t_size = 2
+maxgen_ea = 0
+

@@ -1,6 +1,6 @@
 &control
     calculation = 'vc-relax'
-    pseudo_dir = '/usr/local/gbrv/all_pbe_UPF_v1.5/'
+    pseudo_dir = '/usr/local/qe/gbrv/all_pbe_UPF_v1.5/'
     outdir='./outdir/'
     nstep = 10
 /

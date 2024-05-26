@@ -3,7 +3,7 @@
     calculation = 'relax'
     nstep = 30
     restart_mode = 'from_scratch',
-    pseudo_dir = '/usr/local/pslibrary.1.0.0/pbe/PSEUDOPOTENTIALS/'
+    pseudo_dir = '/usr/local/qe/pslibrary.1.0.0/pbe/PSEUDOPOTENTIALS/'
     outdir='./outdir/' 
  /
 

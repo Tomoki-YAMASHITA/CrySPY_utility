@@ -3,7 +3,7 @@
     calculation = 'vc-relax'
     nstep = 200
     restart_mode = 'from_scratch',
-    pseudo_dir = '/usr/local/gbrv/all_pbe_UPF_v1.5/'
+    pseudo_dir = '/usr/local/qe/gbrv/all_pbe_UPF_v1.5/'
     outdir='./out.d/'
  /
 
