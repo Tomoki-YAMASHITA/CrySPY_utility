@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# ---------- OpenMP
+export OMP_NUM_THREADS=1
+
 # ---------- ASE
 python3 chgnet_in.py > out.log
 

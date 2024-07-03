@@ -1,9 +1,9 @@
-from ase.constraints import ExpCellFilter, StrainFilter
+from ase.constraints import FixSymmetry
+from ase.filters import FrechetCellFilter
 from ase.calculators.emt import EMT
 from ase.calculators.lj import LennardJones
 from ase.optimize.sciopt import SciPyFminCG
 from ase.optimize import BFGS
-from ase.spacegroup.symmetrize import FixSymmetry
 import numpy as np
 from ase.io import read, write
 
@@ -14,10 +14,10 @@ atoms = read('POSCAR', format='vasp')
 # ---------- setting and run
 atoms.calc = EMT()
 atoms.set_constraint([FixSymmetry(atoms)])
-atoms = ExpCellFilter(atoms, hydrostatic_strain=False)
+atoms = FrechetCellFilter(atoms, hydrostatic_strain=False)
 opt = BFGS(atoms)
 #opt=SciPyFminCG(atoms)
-opt.run()
+opt.run(fmax=0.05, steps=2000)
 
 # ---------- opt. structure and energy
 # [rule in ASE interface]

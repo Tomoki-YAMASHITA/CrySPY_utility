@@ -1,16 +1,16 @@
 [basic]
 algo = EA-vc
 calc_code = ASE
-tot_struc = 20
+tot_struc = 100
 nstage = 1
 njob = 10
 jobcmd = zsh
 jobfile = job_cryspy
 
 [structure]
-atype = Cu Au
-ll_nat = 0 0
-ul_nat = 8 8
+atype = Cu Ag Au
+ll_nat = 0 0 0
+ul_nat = 8 8 8
 
 [ASE]
 ase_python = ase_in.py
@@ -30,7 +30,8 @@ n_fittest = 10
 slct_func = TNM
 t_size = 2
 maxgen_ea = 5
-end_point = 0.0 0.0
+end_point = 0.0 0.0 0.0
+show_max = 10
 
 [option]
 

@@ -16,8 +16,7 @@ result = relaxer.relax(atoms=structure, fmax=0.01, steps=2000)
 #                         CrySPY reads the last line of 'log.tote'
 # output file for structure: 'CONTCAR' in vasp format
 # ------ energy
-traj = result['trajectory']
-e = traj.compute_energy()   # eV/cell
+e = result['trajectory'].energies[-1]   # eV/cell
 with open('log.tote', mode='w') as f:
     f.write(str(e))
 # ------ struc
